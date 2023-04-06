@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "352999160537",
+    "project_id": "blindcolor-test",
+    "storage_bucket": "blindcolor-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352999160537:android:321f4d76bb18c1f2079cc8",
+        "android_client_info": {
+          "package_name": "com.example.blindcolor_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "352999160537-5vmsl6mum1hj7bmta9bpp2lkl2iqe1j3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnqNmQTNwU39-A_pvLf2KARdUEHEEIfA0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "352999160537-5vmsl6mum1hj7bmta9bpp2lkl2iqe1j3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
