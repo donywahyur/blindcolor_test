@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
 
-import '../modules/drawing/bindings/drawing_binding.dart';
-import '../modules/drawing/views/drawing_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -47,11 +45,6 @@ class AppPages {
           binding: SplashBinding(),
         ),
       ],
-    ),
-    GetPage(
-      name: _Paths.DRAWING,
-      page: () => const DrawingView(),
-      binding: DrawingBinding(),
     ),
   ];
 }

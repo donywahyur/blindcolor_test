@@ -9,6 +9,7 @@ class SplashView extends GetView<SplashController> {
   const SplashView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    //delay 1 detik untuk cek login
     Future.delayed(const Duration(seconds: 1), () {
       controller.checkLogin();
     });

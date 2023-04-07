@@ -37,6 +37,7 @@ class LoginController extends GetxController {
   }
 
   clearText() {
+    //mengosongkan textfield
     usernameController.clear();
     passwordController.clear();
     namaController.clear();
@@ -44,23 +45,17 @@ class LoginController extends GetxController {
 
   void login() async {
     late List<DocumentSnapshot> documents;
-    // if (isAdmin.value) {
-    //   final QuerySnapshot result = await db
-    //       .collection('admins')
-    //       .where('username', isEqualTo: usernameController.text)
-    //       .where('password', isEqualTo: passwordController.text)
-    //       .get() as QuerySnapshot;
-    //   documents = result.docs;
-    // } else {
+    //cek username dan password in firestore
     final QuerySnapshot result = await db
         .collection('users')
         .where('username', isEqualTo: usernameController.text)
         .where('password', isEqualTo: passwordController.text)
         .get() as QuerySnapshot;
     documents = result.docs;
-    // }
 
+    //cek jika ada data
     if (documents.length == 1) {
+      //simpan data ke shared preferences
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('userId', documents[0].id);
       prefs.setString('username', documents[0]['username']);
@@ -91,6 +86,7 @@ class LoginController extends GetxController {
         .get();
     final List<DocumentSnapshot> documents = result.docs;
     if (documents.length == 1) {
+      //jika username sudah ada
       Get.back();
       Get.snackbar(
         'Daftar',
@@ -101,6 +97,7 @@ class LoginController extends GetxController {
       return;
     }
 
+    //jika username belum ada menambahkan data ke firestore
     await db.collection('users').add({
       'nama': namaController.text,
       'username': usernameController.text,

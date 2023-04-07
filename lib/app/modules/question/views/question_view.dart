@@ -13,11 +13,15 @@ class QuestionView extends GetView<QuestionController> {
 
   @override
   Widget build(BuildContext context) {
+    //mengambil lebar layar
     final double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
+        //untuk menghilangkan overflow
         resizeToAvoidBottomInset: false,
+        //obx untuk mengambil data dari controller
         body: Obx(() {
+          //mengecek jumlah pertanyaan apakah 0 atau tidak
           return controller.questions.length == 0
               ? Center(
                   child: Column(
@@ -38,10 +42,12 @@ class QuestionView extends GetView<QuestionController> {
                         key: _formKey,
                         child: Column(
                           children: [
+                            //menampilkan nomor pertanyaan
                             Text(
                                 "Pertanyaan ${controller.questionIndex.toInt() + 1} / ${controller.questions.length} ",
                                 style: const TextStyle(fontSize: 30)),
                             const SizedBox(height: 16),
+                            //menampilkan waktu
                             LinearProgressIndicator(
                               minHeight: 20,
                               value: int.parse(controller.time.toString()) / 6,
@@ -52,6 +58,7 @@ class QuestionView extends GetView<QuestionController> {
                             const SizedBox(
                               height: 80,
                             ),
+                            //menampilkan image
                             Image.asset(
                               "${controller.questions[controller.questionIndex.toInt()]['image']}",
                               height: 400,
@@ -105,7 +112,7 @@ class QuestionView extends GetView<QuestionController> {
                             //     ),
                             //   ],
                             // ),
-
+                            //menampilkan jawaban
                             Container(
                               width: width,
                               height: 60,
@@ -121,6 +128,7 @@ class QuestionView extends GetView<QuestionController> {
                               ),
                             ),
                             const SizedBox(height: 50),
+                            //menampilkan button selanjutnya
                             Container(
                               width: width,
                               height: 60,

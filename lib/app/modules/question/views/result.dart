@@ -9,11 +9,13 @@ class Result extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //untuk mengatur tombol back
     Future<bool> _onWillPop() async {
       Get.offAllNamed(Routes.HOME);
       return false;
     }
 
+    //mengambil controller
     final controller = Get.find<QuestionController>();
 
     return WillPopScope(
@@ -22,6 +24,7 @@ class Result extends StatelessWidget {
           body: Center(
         child: FutureBuilder(
           builder: (context, snapshot) {
+            //mengecek apakah data sudah ada atau belum
             if (snapshot.hasData) {
               final data = snapshot.data as Map<String, dynamic>;
               final int correct = data['correct'];

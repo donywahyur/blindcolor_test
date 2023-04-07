@@ -31,14 +31,13 @@ class QuestionController extends GetxController {
 
   @override
   void onInit() {
-    Future.delayed(Duration.zero, () {
-      loading.value = true;
-      getQuestions();
-    });
+    //menjalankan fungsi getQuestions saat pertama kali dijalankan
+    getQuestions();
     super.onInit();
   }
 
   getQuestions() async {
+    //mengosongkan list jawaban
     answers.clear();
     try {
       loading.value = true;
@@ -70,6 +69,8 @@ class QuestionController extends GetxController {
       // questTemp.shuffle();
       // questTemp.insert(0, index0);
       // questions.value = questTemp;
+
+      //memasukkan data pertanyaan ke dalam list questions
       var questTemp = [];
       questTemp.addAll(randomPlates);
       questTemp.shuffle();
@@ -77,6 +78,7 @@ class QuestionController extends GetxController {
       questions.value = questTemp;
 
       loading.value = false;
+      //memulai timer
       startTimer();
     } catch (e) {
       //show dialog error and back to home
@@ -99,12 +101,17 @@ class QuestionController extends GetxController {
   }
 
   void startTimer() {
+    //mengosongkan jawaban
     answerController.clear();
+
+    //mengatur waktu timer
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (durationInSeconds > 0) {
+        //jika waktu timer masih ada
         durationInSeconds--;
         time.value = _formatDuration(Duration(seconds: durationInSeconds));
       } else {
+        //jika waktu timer habis
         _timer?.cancel();
         _nextQuestion();
       }
@@ -114,12 +121,14 @@ class QuestionController extends GetxController {
 
   void _nextQuestion() {
     if (questionIndex.value < questions.length - 1) {
+      //jika jumlah pertanyaan masih ada
       saveAnswer();
       questionIndex.value++;
       durationInSeconds = 6;
       time.value = _formatDuration(Duration(seconds: durationInSeconds));
       startTimer();
     } else {
+      //jika pertanyaan sudah habis
       // end of quiz
       // print('next 1');
       Navigator.push(Get.context!, MaterialPageRoute(builder: (context) {
@@ -134,6 +143,7 @@ class QuestionController extends GetxController {
   }
 
   saveNothing() {
+    //menyimpan jawaban kosong
     answers.add({
       'id': questions[questionIndex.value]['id'],
       'answer': "Nothing",
@@ -159,6 +169,7 @@ class QuestionController extends GetxController {
   }
 
   saveAnswer() {
+    //menyimpan jawaban
     var jawaban = {
       'id': questions[questionIndex.value]['id'],
       'answer': answerController.text.toString(),
@@ -172,6 +183,7 @@ class QuestionController extends GetxController {
   }
 
   calculateResult() async {
+    //menghitung hasil jawaban
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int correct = 0;
     int wrong = 0;
@@ -183,8 +195,6 @@ class QuestionController extends GetxController {
         //wrong
         wrong++;
       }
-      // print(
-      //     "${element['answer']} - ${element['corectAnswer']} = ${element['answer'] == element['corectAnswer']} \n");
     }
 
     //insert to firestore and get document id
@@ -207,17 +217,22 @@ class QuestionController extends GetxController {
   }
 
   downloadPDF(docId) async {
+    //mengambil data hasil dari firestore
     DocumentSnapshot data =
         await firestore.collection('results').doc(docId).get();
     Map<String, dynamic> result = data.data() as Map<String, dynamic>;
+    //mengambil data user
     DocumentSnapshot user =
         await firestore.collection('users').doc(result['user']).get();
     Map<String, dynamic> userData = user.data() as Map<String, dynamic>;
     // print(result);
     // print(userData);
+    //mengubah format tanggal
     var date = result['date'].toDate();
     var formatter = DateFormat('dd MMMM yyyy');
     String formatted = formatter.format(date);
+
+    //menentukan status hasil tes
     var status = "";
     if (result['correct'] >= 17) {
       status = "Tidak Buta Warna";
@@ -226,6 +241,8 @@ class QuestionController extends GetxController {
     } else {
       status = "Buta Warna ";
     }
+
+    //membuat pdf
     final pdf = pw.Document();
     pdf.addPage(
       pw.Page(
@@ -261,8 +278,10 @@ class QuestionController extends GetxController {
       ),
     );
 
+    //menyimpan pdf
     Uint8List bytes = await pdf.save();
 
+    //membuka pdf
     final dir = await getApplicationDocumentsDirectory();
     final file = File('${dir.path}/hasil.pdf');
 

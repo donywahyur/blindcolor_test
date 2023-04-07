@@ -112,8 +112,10 @@ class LoginView extends GetView<LoginController> {
                         content: const CircularProgressIndicator(),
                       );
                       if (controller.isDaftar.value) {
+                        //jika daftar menjalankan fungsi daftar
                         controller.daftar();
                       } else {
+                        //jika login menjalankan fungsi login
                         controller.login();
                       }
                     }
@@ -142,6 +144,7 @@ class LoginView extends GetView<LoginController> {
                       padding: const EdgeInsets.symmetric(horizontal: 32.0),
                       child: ElevatedButton(
                         onPressed: () {
+                          //menjalankan fungsi toggleDaftar untuk mengganti tampilan
                           controller.toggleDaftar();
                         },
                         style: ElevatedButton.styleFrom(
