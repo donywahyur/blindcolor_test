@@ -18,7 +18,7 @@ class QuestionView extends GetView<QuestionController> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Obx(() {
-          return controller.loading.value
+          return controller.questions.length == 0
               ? Center(
                   child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -52,12 +52,18 @@ class QuestionView extends GetView<QuestionController> {
                             const SizedBox(
                               height: 80,
                             ),
-                            Image.network(
+                            Image.asset(
                               "${controller.questions[controller.questionIndex.toInt()]['image']}",
-                              height: width * 0.8,
-                              width: width * 0.8,
+                              height: 400,
+                              width: 400,
                             ),
                             const SizedBox(height: 16),
+                            // Image.network(
+                            //   "${controller.questions[controller.questionIndex.toInt()]['image']}",
+                            //   height: width * 0.8,
+                            //   width: width * 0.8,
+                            // ),
+                            // const SizedBox(height: 16),
                             // Row(
                             //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             //   children: [

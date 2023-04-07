@@ -14,6 +14,7 @@ import 'package:open_file/open_file.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:intl/intl.dart';
+import 'package:blindcolor_test/app/data/plates.dart';
 
 class QuestionController extends GetxController {
   final questions = [].obs;
@@ -30,7 +31,10 @@ class QuestionController extends GetxController {
 
   @override
   void onInit() {
-    getQuestions();
+    Future.delayed(Duration.zero, () {
+      loading.value = true;
+      getQuestions();
+    });
     super.onInit();
   }
 
@@ -38,33 +42,38 @@ class QuestionController extends GetxController {
     answers.clear();
     try {
       loading.value = true;
-      var index0 = {};
+      // var index0 = {};
+      // var questTemp = [];
+      // await firestore
+      //     .collection('plates')
+      //     .orderBy('tanggal', descending: false)
+      //     .get()
+      //     .then((value) {
+      //   var i = 0;
+      //   for (var element in value.docs) {
+      //     if (i > 0) {
+      //       questTemp.add({
+      //         'image': element.data()['image'],
+      //         'answer': element.data()['answer'],
+      //         'id': element.id
+      //       });
+      //     } else {
+      //       index0 = {
+      //         'image': element.data()['image'],
+      //         'answer': element.data()['answer'],
+      //         'id': element.id
+      //       };
+      //     }
+      //     i++;
+      //   }
+      // });
+      // questTemp.shuffle();
+      // questTemp.insert(0, index0);
+      // questions.value = questTemp;
       var questTemp = [];
-      await firestore
-          .collection('plates')
-          .orderBy('tanggal', descending: false)
-          .get()
-          .then((value) {
-        var i = 0;
-        for (var element in value.docs) {
-          if (i > 0) {
-            questTemp.add({
-              'image': element.data()['image'],
-              'answer': element.data()['answer'],
-              'id': element.id
-            });
-          } else {
-            index0 = {
-              'image': element.data()['image'],
-              'answer': element.data()['answer'],
-              'id': element.id
-            };
-          }
-          i++;
-        }
-      });
+      questTemp.addAll(randomPlates);
       questTemp.shuffle();
-      questTemp.insert(0, index0);
+      questTemp.insert(0, firstPlates);
       questions.value = questTemp;
 
       loading.value = false;
@@ -74,7 +83,7 @@ class QuestionController extends GetxController {
       Get.dialog(
         AlertDialog(
           title: const Text('Error'),
-          content: const Text('Something went wrong'),
+          content: Text('Something went wrong ${e}'),
           actions: [
             TextButton(
               onPressed: () {

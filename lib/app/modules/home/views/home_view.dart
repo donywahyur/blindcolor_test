@@ -47,6 +47,19 @@ class HomeView extends GetView<HomeController> {
             ),
             child: const Text('Mulai Tes'),
           ),
+
+          // const SizedBox(height: 16),
+          // //elevated button to start the test
+          // ElevatedButton(
+          //   onPressed: () {
+          //     Get.toNamed(Routes.DRAWING);
+          //   },
+          //   style: ButtonStyle(
+          //     backgroundColor: MaterialStateProperty.all<Color>(kPrussianBlue),
+          //     foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          //   ),
+          //   child: const Text('Mulai Tes Gambar'),
+          // ),
         ],
       )),
     );
